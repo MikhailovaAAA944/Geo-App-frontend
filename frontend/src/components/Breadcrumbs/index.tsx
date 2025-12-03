@@ -1,12 +1,12 @@
 import {Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Link, useLocation} from "react-router-dom";
-import {T_Sample} from "modules/types.ts";
+import {T_Rocket} from "modules/types.ts";
 
 interface Props {
-    selectedSample: T_Sample | null
+    selectedRocket: T_Rocket | null
 }
 
-const Breadcrumbs = ({ selectedSample }: Props) => {
+const Breadcrumbs = ({ selectedRocket }: Props) => {
 
     const location = useLocation()
 
@@ -26,10 +26,10 @@ const Breadcrumbs = ({ selectedSample }: Props) => {
                     </Link>
                 </BreadcrumbItem>
 			}
-            {selectedSample &&
+            {selectedRocket &&
                 <BreadcrumbItem active>
                     <Link to={location.pathname}>
-                        { selectedSample.name }
+                        { selectedRocket.name }
                     </Link>
                 </BreadcrumbItem>
             }

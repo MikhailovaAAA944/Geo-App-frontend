@@ -1,13 +1,13 @@
-import {T_Sample} from "src/modules/types.ts";
+import {T_Rocket} from "src/modules/types.ts";
 
-export const SampleMocks:T_Sample[] = [
+export const RocketMocks:T_Rocket[] = [
     {
         id: 1,
         name: "Протон-К",
         status: 1,
         image: "",
         description: "«Протон-К» — трехступенчатая ракета-носитель, созданная путем модернизации ракеты-носителя «Протон».",
-        date_discovery: "22776"
+        payload: "22776"
     },
     {
         id: 2,
@@ -15,7 +15,7 @@ export const SampleMocks:T_Sample[] = [
         status: 1,
         image: "",
         description: "«Ангара́-А5» — российская ракета-носитель тяжёлого класса семейства «Ангара», первая тяжёлая ракета-носитель, разработанная в России после распада СССР.",
-        date_discovery: "2800"
+        payload: "2800"
     },
     {
         id: 3,
@@ -23,7 +23,7 @@ export const SampleMocks:T_Sample[] = [
         status: 1,
         image: "",
         description: "Ариан 5 — европейская одноразовая ракета-носитель семейства «Ариан» тяжёлого класса, использовавшаяся с 1996 по 2023 год.",
-        date_discovery: "6100"
+        payload: "6100"
     },
     {
         id: 4,
@@ -31,6 +31,6 @@ export const SampleMocks:T_Sample[] = [
         status: 1,
         image: "",
         description: "Чанчжэн-7 — китайская двухступенчатая ракета-носитель среднего класса, семейства «Чанчжэн».",
-        date_discovery: "5500"
+        payload: "5500"
     }
 ]

@@ -1,26 +1,26 @@
 import {Button, Col, Container, Form, Input, Row} from "reactstrap";
-import {T_Sample} from "src/modules/types.ts";
-import SampleCard from "components/SampleCard";
-import {SampleMocks} from "src/modules/mocks.ts";
+import {T_Rocket} from "src/modules/types.ts";
+import RocketCard from "src/components/RocketCard";
+import {RocketMocks} from "src/modules/mocks.ts";
 import {FormEvent, useEffect} from "react";
 import * as React from "react";
 
 type Props = {
-    samples: T_Sample[],
-    setSamples: React.Dispatch<React.SetStateAction<T_Sample[]>>
+    rockets: T_Rocket[],
+    setRockets: React.Dispatch<React.SetStateAction<T_Rocket[]>>
     isMock: boolean,
     setIsMock: React.Dispatch<React.SetStateAction<boolean>>
-    sampleName: string,
-    setSampleName: React.Dispatch<React.SetStateAction<string>>
+    rocketName: string,
+    setRocketName: React.Dispatch<React.SetStateAction<string>>
 }
 
-const SamplesListPage = ({samples, setSamples, isMock, setIsMock, sampleName, setSampleName}:Props) => {
+const RocketsListPage = ({rockets, setRockets, isMock, setIsMock, rocketName, setRocketName}:Props) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`/api/launchvehicle/?sample_name=${sampleName.toLowerCase()}`)
+            const response = await fetch(`/api/launchvehicle/?rocket_name=${rocketName.toLowerCase()}`)
             const data = await response.json()
-            setSamples(data.samples)
+            setRockets(data.rockets)
             setIsMock(false)
         } catch {
             createMocks()
@@ -29,7 +29,7 @@ const SamplesListPage = ({samples, setSamples, isMock, setIsMock, sampleName, se
 
     const createMocks = () => {
         setIsMock(true)
-        setSamples(SampleMocks.filter(sample => sample.name.toLowerCase().includes(sampleName.toLowerCase())))
+        setRockets(RocketMocks.filter(rocket => rocket.name.toLowerCase().includes(rocketName.toLowerCase())))
     }
 
     const handleSubmit = async (e:FormEvent) => {
@@ -52,7 +52,7 @@ const SamplesListPage = ({samples, setSamples, isMock, setIsMock, sampleName, se
                     <Form onSubmit={handleSubmit}>
                         <Row>
                             <Col md="8">
-                                <Input value={sampleName} onChange={(e) => setSampleName(e.target.value)} placeholder="Поиск..."></Input>
+                                <Input value={rocketName} onChange={(e) => setRocketName(e.target.value)} placeholder="Поиск..."></Input>
                             </Col>
                             <Col>
                                 <Button color="primary" className="w-100 search-btn">Поиск</Button>
@@ -62,9 +62,9 @@ const SamplesListPage = ({samples, setSamples, isMock, setIsMock, sampleName, se
                 </Col>
             </Row>
             <Row>
-                {samples?.map(sample => (
-                    <Col key={sample.id} xs="4">
-                        <SampleCard sample={sample} isMock={isMock} />
+                {rockets?.map(rocket => (
+                    <Col key={rocket.id} xs="4">
+                        <RocketCard rocket={rocket} isMock={isMock} />
                     </Col>
                 ))}
             </Row>
@@ -72,4 +72,4 @@ const SamplesListPage = ({samples, setSamples, isMock, setIsMock, sampleName, se
     );
 };
 
-export default SamplesListPage
+export default RocketsListPage

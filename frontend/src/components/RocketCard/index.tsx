@@ -1,28 +1,28 @@
 import {Button, Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
 import mockImage from "assets/mock.png";
 import {Link} from "react-router-dom";
-import {T_Sample} from "modules/types.ts";
+import {T_Rocket} from "modules/types.ts";
 
-interface SampleCardProps {
-    sample: T_Sample,
+interface RocketCardProps {
+    rocket: T_Rocket,
     isMock: boolean
 }
 
-const SampleCard = ({sample, isMock}: SampleCardProps) => {
+const RocketCard = ({rocket, isMock}: RocketCardProps) => {
     return (
-        <Card key={sample.id} style={{width: '18rem', margin: "0 auto 50px", height: "calc(100% - 50px)" }}>
+        <Card key={rocket.id} style={{width: '18rem', margin: "0 auto 50px", height: "calc(100% - 50px)" }}>
             <CardImg
-                src={isMock ? mockImage as string : sample.image}
+                src={isMock ? mockImage as string : rocket.image}
                 style={{"height": "200px"}}
             />
             <CardBody className="d-flex flex-column justify-content-between">
                 <CardTitle tag="h5">
-                    {sample.name}
+                    {rocket.name}
                 </CardTitle>
                 <CardText>
-                    Исходная полезная нагрузка: {sample.date_discovery}
+                    Исходная полезная нагрузка: {rocket.payload}
                 </CardText>
-                <Link to={`/launchvehicle/${sample.id}`}>
+                <Link to={`/launchvehicle/${rocket.id}`}>
                     <Button color="primary">
                         Подробнее
                     </Button>
@@ -32,4 +32,4 @@ const SampleCard = ({sample, isMock}: SampleCardProps) => {
     );
 };
 
-export default SampleCard
+export default RocketCard

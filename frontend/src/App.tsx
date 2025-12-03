@@ -1,36 +1,36 @@
 import {useState} from "react";
 import Header from "components/Header";
 import Breadcrumbs from "components/Breadcrumbs";
-import SamplePage from "pages/SamplePage";
-import SamplesListPage from "pages/SamplesListPage";
+import RocketPage from "pages/RocketPage";
+import RocketsListPage from "pages/RocketListPage";
 import {Route, Routes} from "react-router-dom";
-import {T_Sample} from "src/modules/types.ts";
+import {T_Rocket} from "src/modules/types.ts";
 import {Container, Row} from "reactstrap";
 import HomePage from "pages/HomePage";
 import "./styles.css"
 
 function App() {
 
-    const [samples, setSamples] = useState<T_Sample[]>([])
+    const [rockets, setRockets] = useState<T_Rocket[]>([])
 
-    const [selectedSample, setSelectedSample] = useState<T_Sample | null>(null)
+    const [selectedRocket, setselectedRocket] = useState<T_Rocket | null>(null)
 
     const [isMock, setIsMock] = useState(false);
 
-    const [sampleName, setSampleName] = useState<string>("")
+    const [rocketName, setRocketName] = useState<string>("")
 
     return (
         <div>
             <Header/>
             <Container className="pt-4">
                 <Row className="mb-3">
-                    <Breadcrumbs selectedSample={selectedSample} />
+                    <Breadcrumbs selectedRocket={selectedRocket} />
                 </Row>
                 <Row>
                     <Routes>
 						<Route path="/" element={<HomePage />} />
-                        <Route path="/launchvehicle/" element={<SamplesListPage samples={samples} setSamples={setSamples} isMock={isMock} setIsMock={setIsMock} sampleName={sampleName} setSampleName={setSampleName}/>} />
-                        <Route path="/launchvehicle/:id" element={<SamplePage selectedSample={selectedSample} setSelectedSample={setSelectedSample} isMock={isMock} setIsMock={setIsMock}/>} />
+                        <Route path="/launchvehicle/" element={<RocketsListPage rockets={rockets} setRockets={setRockets} isMock={isMock} setIsMock={setIsMock} rocketName={rocketName} setRocketName={setRocketName}/>} />
+                        <Route path="/launchvehicle/:id" element={<RocketPage selectedRocket={selectedRocket} setselectedRocket={setselectedRocket} isMock={isMock} setIsMock={setIsMock}/>} />
                     </Routes>
                 </Row>
             </Container>

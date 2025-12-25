@@ -28,7 +28,7 @@ const RocketPage = ({selectedRocket, setselectedRocket, isMock, setIsMock}: Prop
 
     const createMock = () => {
         setIsMock(true)
-        setselectedRocket(RocketMocks.find(rocket => rocket?.id == parseInt(id as string)) as T_Rocket)
+        setselectedRocket(RocketMocks.find(rocket => rocket?.pk == parseInt(id as string)) as T_Rocket)
     }
 
     useEffect(() => {
@@ -55,15 +55,16 @@ const RocketPage = ({selectedRocket, setselectedRocket, isMock, setIsMock}: Prop
                 <Col md="6">
                     <img
                         alt=""
-                        src={isMock ? mockImage as string : selectedRocket.image}
+                        src={isMock ? mockImage as string : `http://127.0.0.1:9000/django-media/${selectedRocket.imagerocket}`}
                         className="w-100"
                     />
                 </Col>
                 <Col md="6">
                     <h1 className="mb-3">{selectedRocket.name}</h1>
                     <p className="fs-5">Описание: {selectedRocket.description}</p>
-                    <p className="fs-5">Исходная полезная нагрузка: {selectedRocket.payload}.</p>
+                    <p className="fs-5">Исходная полезная нагрузка: {selectedRocket.gto_playload}kg</p>
                 </Col>
+                
             </Row>
         </Container>
     );

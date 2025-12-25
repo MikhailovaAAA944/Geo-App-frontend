@@ -10,9 +10,9 @@ interface RocketCardProps {
 
 const RocketCard = ({rocket, isMock}: RocketCardProps) => {
     return (
-        <Card key={rocket.id} style={{width: '18rem', margin: "0 auto 50px", height: "calc(100% - 50px)" }}>
+        <Card key={rocket.pk} style={{width: '18rem', margin: "0 auto 50px", height: "calc(100% - 50px)" }}>
             <CardImg
-                src={isMock ? mockImage as string : rocket.image}
+                src={isMock ? mockImage as string : `http://127.0.0.1:9000/django-media/${rocket.imagerocket}`}
                 style={{"height": "200px"}}
             />
             <CardBody className="d-flex flex-column justify-content-between">
@@ -20,9 +20,9 @@ const RocketCard = ({rocket, isMock}: RocketCardProps) => {
                     {rocket.name}
                 </CardTitle>
                 <CardText>
-                    Исходная полезная нагрузка: {rocket.payload}
+                    Исходная полезная нагрузка: {rocket.gto_playload}
                 </CardText>
-                <Link to={`/launchvehicle/${rocket.id}`}>
+                <Link to={`/launchvehicle/${rocket.pk}`}>
                     <Button color="primary">
                         Подробнее
                     </Button>

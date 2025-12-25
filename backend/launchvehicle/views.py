@@ -39,29 +39,19 @@ class LaunchVehicleList(APIView):
 
     # Возвращает список 
     def get(self, request, format=None):
-        launch_vehicle = self.model_class.objects.all()
-
-        # Получаем параметры запроса для фильтрации
-        query_params = request.query_params
-
-        # Применяем фильтрацию по параметрам
-        launch_vehicle = self.apply_filters(launch_vehicle, query_params)
-    
-        serializer = self.serializer_class(launch_vehicle, many=True)
+        queryset = self.model_class.objects.all()
+        
+        # Получаем параметр name для поиска
+        name = request.query_params.get('name')
+        print 
+        # Применяем фильтрацию только по полю name
+        if name:
+            # Поиск по вхождению подстроки (без учета регистра)
+            queryset = queryset.filter(Q(name__icontains=name)|Q(name__istartswith=name))
+        
+        serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
     
-    def apply_filters(self, queryset, query_params):
-        """
-        Применяет фильтрацию к queryset на основе параметров запроса
-        """
-        # Примеры фильтрации по различным полям
-        filters = Q()
-        
-        # Фильтрация по строковым полям (точное совпадение)
-        if 'name' in query_params:
-            filters &= Q(name__icontains=query_params['name'])
-        
-        return queryset.filter(filters)
 
     # Добавляет новую *с изображением
     def post(self, request, format=None):

@@ -18,9 +18,10 @@ const RocketsListPage = ({rockets, setRockets, isMock, setIsMock, rocketName, se
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`/api/launchvehicle/?rocket_name=${rocketName.toLowerCase()}`)
+            const response = await fetch(`/api/launchvehicle/?name=${rocketName.toLowerCase()}`)
             const data = await response.json()
-            setRockets(data.rockets)
+            console.log(data);
+            setRockets(data)
             setIsMock(false)
         } catch {
             createMocks()
@@ -63,7 +64,7 @@ const RocketsListPage = ({rockets, setRockets, isMock, setIsMock, rocketName, se
             </Row>
             <Row>
                 {rockets?.map(rocket => (
-                    <Col key={rocket.id} xs="4">
+                    <Col key={rocket.pk} xs="4">
                         <RocketCard rocket={rocket} isMock={isMock} />
                     </Col>
                 ))}

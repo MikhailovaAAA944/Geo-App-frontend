@@ -1,0 +1,21 @@
+version: '3.8'
+
+volumes:
+  pg_data_geoapp:
+ 
+services:
+  db:
+    image: postgres:14
+    container_name: geoapp_db
+    environment:
+      POSTGRES_USER: geoapp_user  
+      POSTGRES_PASSWORD: geoapp_pass
+      POSTGRES_DB: geoapp_db
+    volumes:
+      - pg_data_geoapp:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"  # Пробрасываем порт
+ 
+  
+
+ 

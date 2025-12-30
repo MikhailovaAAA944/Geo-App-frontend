@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/Geo-App-frontend/sw.js', { scope: '/Geo-App-frontend/' })})}

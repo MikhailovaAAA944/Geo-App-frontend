@@ -1,9 +1,10 @@
 export type T_Rocket =  {
-    id: number,
+    pk: number,
     name: string,
+    short_description: string,
+    gto_playload: number,
     description: string,
-    date_discovery: string,
-    image: string,
-    status: number,
+    imagerocket: string,
+    is_active: boolean,
     order?: number
 }

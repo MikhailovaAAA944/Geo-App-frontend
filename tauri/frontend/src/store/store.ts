@@ -1,10 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
-import samplesReducer from "./slices/samplesSlice.ts"
+import rocketsReducer from "./slices/rocketsSlice.ts"
 
 export const store = configureStore({
     reducer: {
-        samples: samplesReducer
+        rockets: rocketsReducer
     }
 });
 

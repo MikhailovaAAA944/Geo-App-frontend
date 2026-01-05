@@ -42,8 +42,7 @@ class LaunchVehicleList(APIView):
         queryset = self.model_class.objects.all()
         
         # Получаем параметр name для поиска
-        name = request.query_params.get('name')
-        print 
+        name = request.query_params.get('rockets_name') or request.query_params.get('name')
         # Применяем фильтрацию только по полю name
         if name:
             # Поиск по вхождению подстроки (без учета регистра)

@@ -7,8 +7,8 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
     manifest: {
-        name: 'Mars Sample Return Mission',
-        short_name: 'Mars Sample Return Mission',
+        name: 'Launch Vehicle',
+        short_name: 'Launch Vehicle',
         description: 'Description',
         theme_color: '#ffffff',
         icons: [
@@ -26,7 +26,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     }
 };
 
-// @ts-expect-error process is a nodejs global
+
 const host = process.env.TAURI_DEV_HOST;
 
 export default defineConfig({

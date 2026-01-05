@@ -26,7 +26,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     # Набор методов для услуг:
+    path('api/rockets/', views.LaunchVehicleList.as_view(), name='launchvehicle-list'),
     path('api/launchvehicle/', views.LaunchVehicleList.as_view(), name='launchvehicle-list'),
+    path('api/rockets/<int:pk>/', views.LaunchVehicleDetail.as_view(), name='launchvehicle-detail'),
+    path('api/rocket/<int:pk>/', views.LaunchVehicleDetail.as_view(), name='launchvehicle-detail'),
     path('api/launchvehicle/<int:pk>/', views.LaunchVehicleDetail.as_view(), name='launchvehicle-detail'),
     path('api/launchvehicle/create/', views.create_rocket, name='create_rocket'),
     path('api/launchvehicle/<int:pk>/put/', views.put, name='launchvehicle-put'),

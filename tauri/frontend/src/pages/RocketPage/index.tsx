@@ -4,7 +4,7 @@ import {useEffect} from "react";
 import {CardImg, Col, Container, Row} from "reactstrap";
 import mockImage from "assets/mock.png";
 import {T_Rocket} from "modules/types.ts";
-import {SampleMocks} from "modules/mocks.ts";
+import {RocketMocks} from "modules/mocks.ts";
 
 type Props = {
     selectedRocket: T_Rocket | null,
@@ -29,7 +29,7 @@ const RocketPage = ({selectedRocket, setSelectedRocket, isMock, setIsMock}: Prop
 
     const createMock = () => {
         setIsMock(true)
-        setSelectedRocket(SampleMocks.find(rockets => rockets?.id == parseInt(id as string)) as T_Rocket)
+        setSelectedRocket(RocketMocks.find(rockets => rockets?.pk == parseInt(id as string)) as T_Rocket)
     }
 
     useEffect(() => {
@@ -54,11 +54,11 @@ const RocketPage = ({selectedRocket, setSelectedRocket, isMock, setIsMock}: Prop
         <Container>
             <Row>
                 <Col md="6">
-                    <CardImg src={isMock ? mockImage as string : selectedRocket.image} className="mb-3" />
+                    <CardImg src={isMock ? mockImage as string : selectedRocket.imagerocket} className="mb-3" />
                 </Col>
                 <Col md="6">
                     <h1 className="mb-3">{selectedRocket.name}</h1>
-                    <p className="fs-5">Дата обнаружения: {selectedRocket.date_discovery}.</p>
+                    <p className="fs-5">Дата обнаружения: {selectedRocket.gto_playload}.</p>
                     <p className="fs-5">Описание: {selectedRocket.description}</p>
                 </Col>
             </Row>

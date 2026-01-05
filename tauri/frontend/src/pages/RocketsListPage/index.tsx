@@ -1,11 +1,11 @@
 import {Button, Col, Container, Form, Input, Row} from "reactstrap";
-import SampleCard from "components/SampleCard";
+import RocketCard from "src/components/RocketCard";
 import {ChangeEvent, FormEvent, useEffect} from "react";
 import * as React from "react";
 import {useAppSelector} from "src/store/store.ts";
-import {updateSampleName} from "src/store/slices/rocketsSlice.ts";
+import {updateRocketName} from "src/store/slices/rocketsSlice.ts";
 import {T_Rocket} from "modules/types.ts";
-import {SampleMocks} from "modules/mocks.ts";
+import {RocketMocks} from "modules/mocks.ts";
 import {useDispatch} from "react-redux";
 
 type Props = {
@@ -19,28 +19,28 @@ const RocketsListPage = ({rockets, setRockets, isMock, setIsMock}:Props) => {
 
     const dispatch = useDispatch()
 
-    const {rockets_name} = useAppSelector((state) => state.rockets)
+    const {rocket_name} = useAppSelector((state) => state.rockets)
 
     const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateSampleName(e.target.value))
+        dispatch(updateRocketName(e.target.value))
     }
 
     const createMocks = () => {
         setIsMock(true)
-        setRockets(SampleMocks.filter(rockets => rockets.name.toLowerCase().includes(rockets_name.toLowerCase())))
+        setRockets(RocketMocks.filter(rockets => rockets.name.toLowerCase().includes(rocket_name.toLowerCase())))
     }
 
     const handleSubmit = async (e:FormEvent) => {
         e.preventDefault()
-        await fetchSamples()
+        await fetchRockets()
     }
 
-    const fetchSamples = async () => {
+    const fetchRockets = async () => {
         try {
             const env = await import.meta.env;
-            const response = await fetch(`${env.VITE_API_URL}/api/rockets/?rockets_name=${rockets_name.toLowerCase()}`)
+            const response = await fetch(`${env.VITE_API_URL}/api/rockets/?rockets_name=${rocket_name.toLowerCase()}`)
             const data = await response.json()
-            setRockets(data.rockets)
+            setRockets(data)
             setIsMock(false)
         } catch {
             createMocks()
@@ -48,7 +48,7 @@ const RocketsListPage = ({rockets, setRockets, isMock, setIsMock}:Props) => {
     }
 
     useEffect(() => {
-        fetchSamples()
+        fetchRockets()
     }, []);
 
     return (
@@ -58,7 +58,7 @@ const RocketsListPage = ({rockets, setRockets, isMock, setIsMock}:Props) => {
                     <Form onSubmit={handleSubmit}>
                         <Row>
                             <Col xs="8">
-                                <Input value={rockets_name} onChange={handleChange} placeholder="Поиск..."></Input>
+                                <Input value={rocket_name} onChange={handleChange} placeholder="Поиск..."></Input>
                             </Col>
                             <Col>
                                 <Button color="primary" className="w-100 search-btn">Поиск</Button>
@@ -69,8 +69,8 @@ const RocketsListPage = ({rockets, setRockets, isMock, setIsMock}:Props) => {
             </Row>
             <Row>
                 {rockets?.map(rockets => (
-                    <Col key={rockets.id} sm="12" md="6" lg="4">
-                        <SampleCard rockets={rockets} isMock={isMock} />
+                    <Col key={rockets.pk} sm="12" md="6" lg="4">
+                        <RocketCard rockets={rockets} isMock={isMock} />
                     </Col>
                 ))}
             </Row>

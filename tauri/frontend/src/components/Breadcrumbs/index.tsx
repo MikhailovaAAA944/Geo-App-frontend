@@ -3,10 +3,10 @@ import {Link, useLocation} from "react-router-dom";
 import {T_Rocket} from "modules/types.ts";
 
 type Props = {
-    selectedSample: T_Rocket | null
+    selectedRocket: T_Rocket | null
 }
 
-const Breadcrumbs = ({selectedSample}:Props) => {
+const Breadcrumbs = ({selectedRocket}:Props) => {
 
     const location = useLocation()
 
@@ -19,17 +19,17 @@ const Breadcrumbs = ({selectedSample}:Props) => {
 					</Link>
 				</BreadcrumbItem>
 			}
-			{location.pathname.includes("/samples") &&
+			{location.pathname.includes("/rockets") &&
                 <BreadcrumbItem active>
-                    <Link to="/samples">
-						Образцы
+                    <Link to="/rockets">
+						Ракеты
                     </Link>
                 </BreadcrumbItem>
 			}
-            {selectedSample &&
+            {selectedRocket &&
                 <BreadcrumbItem active>
                     <Link to={location.pathname}>
-                        { selectedSample.name }
+                        { selectedRocket.name }
                     </Link>
                 </BreadcrumbItem>
             }

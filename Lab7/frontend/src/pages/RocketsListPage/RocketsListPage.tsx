@@ -13,7 +13,7 @@ export const RocketsListPage = () => {
 
     const isAuthenticated = useAppSelector((state) => state.user?.is_authenticated)
 
-    const {draft_mission_id, samples_count} = useAppSelector((state) => state.missions)
+    const {draft_mission_id, rockets_count} = useAppSelector((state) => state.missions)
 
     const hasDraft = draft_mission_id != null
 
@@ -49,7 +49,7 @@ export const RocketsListPage = () => {
                 </Col>
                 {isAuthenticated &&
                     <Col className="d-flex flex-row justify-content-end" md="6">
-                        <Bin isActive={hasDraft} draft_mission_id={draft_mission_id} samples_count={samples_count} />
+                        <Bin isActive={hasDraft} draft_mission_id={draft_mission_id} rockets_count={rockets_count} />
                     </Col>
                 }
             </Row>

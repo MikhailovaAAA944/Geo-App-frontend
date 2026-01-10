@@ -49,7 +49,7 @@ export const Header = () => {
                                 {isAuthenticated ?
                                     <>
                                         <NavItem>
-                                            <NavLink tag={RRNavLink} to="/missions/">
+                                            <NavLink tag={RRNavLink} to="/payloadcalculation/">
                                                 Расчет
                                             </NavLink>
                                         </NavItem>

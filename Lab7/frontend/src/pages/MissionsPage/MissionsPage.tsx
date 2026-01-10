@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "store/store.ts";
 import {fetchMissions, T_missionsFilters, updateFilters} from "store/slices/missionsSlice.ts";
 import {Button, Col, Container, Form, Input, Row} from "reactstrap";
-import {MissionsTable} from "components/MissionsTable/MissionsTable.tsx";
+import {CalculationsTable} from "components/CalculationsTable/CalculationsTable.tsx";
 import {useNavigate} from "react-router-dom";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.tsx";
 
@@ -74,7 +74,7 @@ export const MissionsPage = () => {
                     </Col>
                 </Row>
             </Form>
-            {missions.length ? <MissionsTable missions={missions}/> : <h3 className="text-center mt-5">Миссии не найдены</h3>}
+            {missions.length ? <CalculationsTable calculations={missions}/> : <h3 className="text-center mt-5">Миссии не найдены</h3>}
         </Container>
     )
 };

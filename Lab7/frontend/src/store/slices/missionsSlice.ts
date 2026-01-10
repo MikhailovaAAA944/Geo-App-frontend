@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {T_Mission, T_Rocket} from "src/utils/types.ts";
+import {T_Calculation, T_Rocket} from "src/utils/types.ts";
 import {AsyncThunkConfig} from "@reduxjs/toolkit/dist/createAsyncThunk";
 import {api} from "modules/api.ts";
 import {AxiosResponse} from "axios";
@@ -7,9 +7,9 @@ import {NEXT_YEAR, PREV_YEAR} from "utils/consts.ts";
 
 type T_missionsSlice = {
     draft_mission_id: number | null,
-    samples_count: number | null,
-    mission: T_Mission | null,
-    missions: T_Mission[],
+    rockets_count: number | null,
+    mission: T_Calculation | null,
+    missions: T_Calculation[],
     filters: T_missionsFilters,
     save_mm: boolean
 }
@@ -22,7 +22,7 @@ export type T_missionsFilters = {
 
 const initialState:T_missionsSlice = {
     draft_mission_id: null,
-    samples_count: null,
+    rockets_count: null,
     mission: null,
     missions: [],
     filters: {
@@ -33,15 +33,15 @@ const initialState:T_missionsSlice = {
     save_mm: false
 }
 
-export const fetchMission = createAsyncThunk<T_Mission, string, AsyncThunkConfig>(
+export const fetchMission = createAsyncThunk<T_Calculation, string, AsyncThunkConfig>(
     "missions/mission",
-    async function(mission_id) {
-        const response = await api.missions.missionsRead(mission_id) as AxiosResponse<T_Mission>
+    async function(calculation_id) {
+        const response = await api.payloadcalculation.payloadcalculationRead(calculation_id) as unknown as AxiosResponse<T_Calculation>
         return response.data
     }
 )
 
-export const fetchMissions = createAsyncThunk<T_Mission[], object, AsyncThunkConfig>(
+export const fetchMissions = createAsyncThunk<T_Calculation[], object, AsyncThunkConfig>(
     "missions/missions",
     async function(_, thunkAPI) {
         const state = thunkAPI.getState()
@@ -50,7 +50,7 @@ export const fetchMissions = createAsyncThunk<T_Mission[], object, AsyncThunkCon
             status: state.missions.filters.status,
             date_formation_start: state.missions.filters.date_formation_start,
             date_formation_end: state.missions.filters.date_formation_end
-        }) as unknown as AxiosResponse<T_Mission[]>
+        }) as unknown as AxiosResponse<T_Calculation[]>
         return response.data
     }
 )
@@ -104,7 +104,7 @@ const missionsSlice = createSlice({
     reducers: {
         saveMission: (state, action) => {
             state.draft_mission_id = action.payload.draft_mission_id
-            state.samples_count = action.payload.samples_count
+            state.rockets_count = action.payload.rockets_count
         },
         removeMission: (state) => {
             state.mission = null
@@ -117,17 +117,17 @@ const missionsSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchMission.fulfilled, (state:T_missionsSlice, action: PayloadAction<T_Mission>) => {
+        builder.addCase(fetchMission.fulfilled, (state:T_missionsSlice, action: PayloadAction<T_Calculation>) => {
             state.mission = action.payload
         });
-        builder.addCase(fetchMissions.fulfilled, (state:T_missionsSlice, action: PayloadAction<T_Mission[]>) => {
+        builder.addCase(fetchMissions.fulfilled, (state:T_missionsSlice, action: PayloadAction<T_Calculation[]>) => {
             state.missions = action.payload
         });
         builder.addCase(removeSampleFromDraftMission.rejected, (state:T_missionsSlice) => {
             state.mission = null
         });
         builder.addCase(removeSampleFromDraftMission.fulfilled, (state:T_missionsSlice, action: PayloadAction<T_Rocket[]>) => {
-            (state.mission as T_Mission).samples = action.payload
+            (state.mission as T_Calculation).rocket = action.payload
         });
         builder.addCase(sendDraftMission.fulfilled, (state:T_missionsSlice) => {
             state.mission = null

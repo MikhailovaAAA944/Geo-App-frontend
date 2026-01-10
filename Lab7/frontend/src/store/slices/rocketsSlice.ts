@@ -34,11 +34,11 @@ export const fetchSamples = createAsyncThunk<T_Rocket[], object, AsyncThunkConfi
         }) as unknown as AxiosResponse<T_RocketsListResponse>
 
         thunkAPI.dispatch(saveMission({
-            draft_mission_id: response.data.draft_mission_id,
-            samples_count: response.data.samples_count
+            draft_mission_id: response.data.draft_calculation_id,
+            rockets_count: response.data.rockets_count
         }))
 
-        return response.data
+        return response.data.rockets
     }
 )
 

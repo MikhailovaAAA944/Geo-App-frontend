@@ -16,14 +16,27 @@ class LaunchVehicleSerializer(serializers.ModelSerializer):
         fields = ["pk","name", "short_description", "description", "gto_playload", "imagerocket", "is_active"]
 
 
+class CalculationRequestSerializer(serializers.ModelSerializer):
+    rocket = LaunchVehicleSerializer()  # или RocketSerializer если есть
+    
+    class Meta:
+        model = CalculationRequest
+        fields = ['id', 'rocket', 'result']
+
 
 class PayloadCalculationSerializer(serializers.ModelSerializer):
     # StringRelatedField вернет строковое представление объекта, то есть его имя
     user = serializers.StringRelatedField(read_only=True)
+    rockets = CalculationRequestSerializer(
+        source='calculationrequest_set', 
+        many=True, 
+        read_only=True
+    )
 
     class Meta:
         model = PayloadCalculation
-        fields =["pk","status","comment","location","port_name","creation_datetime","formation_datetime","completion_datetime","client","manager","user"]
+        fields =["pk","status","comment","location","port_name","creation_datetime",
+                 "formation_datetime","completion_datetime","client","manager","user", "rockets"]
 
 
 

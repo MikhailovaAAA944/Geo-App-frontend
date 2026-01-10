@@ -2,13 +2,13 @@ import {useNavigate} from "react-router-dom";
 import {useMemo} from "react";
 import {formatDate} from "src/utils/utils.ts";
 import CustomTable from "components/CustomTable";
-import {T_Mission} from "src/utils/types.ts";
+import {T_Calculation} from "src/utils/types.ts";
 
-export const MissionsTable = ({missions}:{missions:T_Mission[]}) => {
+export const CalculationsTable = ({calculations}:{calculations:T_Calculation[]}) => {
     const navigate = useNavigate()
 
-    const handleClick = (mission_id) => {
-        navigate(`/missions/${mission_id}`)
+    const handleClick = (calculation_id) => {
+        navigate(`/payloadcalculation/${calculation_id}`)
     }
 
     const statuses = {
@@ -23,26 +23,26 @@ export const MissionsTable = ({missions}:{missions:T_Mission[]}) => {
         () => [
             {
                 Header: '№',
-                accessor: 'id',
+                accessor: 'pk',
             },
             {
                 Header: 'Статус',
                 accessor: 'status',
-                Cell: ({ value }) => statuses[value]
+                Cell: ({ value }) => value
             },
             {
                 Header: 'Дата создания',
-                accessor: 'date_created',
+                accessor: 'creation_datetime',
                 Cell: ({ value }) => formatDate(value)
             },
             {
                 Header: 'Дата формирования',
-                accessor: 'date_formation',
+                accessor: 'formation_datetime',
                 Cell: ({ value }) => formatDate(value)
             },
             {
                 Header: 'Дата завершения',
-                accessor: 'date_complete',
+                accessor: 'completion_datetime',
                 Cell: ({ value }) => formatDate(value)
             }
         ],
@@ -50,6 +50,6 @@ export const MissionsTable = ({missions}:{missions:T_Mission[]}) => {
     )
 
     return (
-        <CustomTable columns={columns} data={missions} onClick={handleClick}/>
+        <CustomTable columns={columns} data={calculations} onClick={handleClick}/>
     )
 };

@@ -45,8 +45,8 @@ function App() {
                         <Route path="/register/" element={<RegisterPage />} />
                         <Route path="/launchvehicle/" element={<SamplesListPage />} />
                         <Route path="/launchvehicle/:id/" element={<RocketPage />} />
-                        <Route path="/missions/" element={<MissionsPage />} />
-                        <Route path="/missions/:id/" element={<MissionPage />} />
+                        <Route path="/payloadcalculation/" element={<MissionsPage />} />
+                        <Route path="/payloadcalculation/:id/" element={<MissionPage />} />
                         <Route path="/profile/" element={<ProfilePage />} />
                         <Route path="/403/" element={<AccessDeniedPage />} />
                         <Route path="/404/" element={<NotFoundPage />} />

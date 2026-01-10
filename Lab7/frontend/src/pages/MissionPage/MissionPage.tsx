@@ -28,6 +28,10 @@ export const MissionPage = () => {
     const [name, setName] = useState<string>(mission?.name)
     const [success, setSuccess] = useState<string>(mission?.success)
 
+    console.log('Миссия из store:', mission);
+    console.log('Состояние всего missions:', useAppSelector((state) => state.missions));
+    console.log('ID из URL:', id);
+
     useEffect(() => {
         if (!isAuthenticated) {
             navigate("/403/")
@@ -51,7 +55,7 @@ export const MissionPage = () => {
 
         await dispatch(sendDraftMission())
 
-        navigate("/missions")
+        navigate("/payloadcalculation")
     }
 
     const saveMission = async (e?) => {
@@ -73,7 +77,7 @@ export const MissionPage = () => {
     if (!mission) {
         return (
             <div>
-
+                        НЕТ данных
             </div>
         )
     }
@@ -89,9 +93,10 @@ export const MissionPage = () => {
                 {isCompleted && <CustomInput label="Исход миссии" value={success ? "Успех" : "Неудача"} disabled={true}/>}
             </Row>
             <Row>
-                {mission.samples.length > 0 ? mission.samples.map((sample:T_Rocket) => (
-                    <Col md="4" key={sample.id} className="d-flex justify-content-center mb-5">
-                        <SampleCard sample={sample} showRemoveBtn={isDraft} showMM={true} editMM={isDraft} value={sample.order}/>
+                {mission.rockets.length > 0 ? mission.rockets.map((item:T_Rocket) => (
+           
+                    <Col md="4" key={item.rocket.pk} className="d-flex justify-content-center mb-5">
+                        <SampleCard sample={item.rocket} showRemoveBtn={isDraft} showMM={true} editMM={isDraft} value={item.rocket.order}/>
                     </Col>
                 )) :
                     <h3 className="text-center">Ракеты еще не добавлены</h3>

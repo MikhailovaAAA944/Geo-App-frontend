@@ -13,7 +13,7 @@ function CustomTable({ columns, data, onClick }) {
 
     const onTdClicked = (row, e) => {
         if (e.target.tagName != "BUTTON") {
-            onClick(row.values.id)
+            onClick(row.values.pk)
         }
     }
 

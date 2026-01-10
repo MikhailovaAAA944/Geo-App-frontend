@@ -9,25 +9,25 @@ export type T_Rocket =  {
     order?: number
 }
 
-export type T_Mission = {
-    id: string | null
+export type T_Calculation = {
+    pk: string | null
     status: E_MissionStatus
-    date_complete: string
-    date_created: string
-    date_formation: string
-    owner: string
-    moderator: string
-    samples: T_Rocket[]
+    completion_datetime: string
+    creation_datetime: string
+    formation_datetime: string
+    client: string
+    manager: string
+    rocket: T_Rocket[]
     name: string
     success: string
 }
 
 export enum E_MissionStatus {
-    Draft=1,
-    InWork,
-    Completed,
-    Rejected,
-    Deleted
+    Draft='Черновик',
+    InWork='В расчете',
+    Completed='Расчет завершен',
+    Rejected='Ошибка в расчете',
+    Deleted='Удален'
 }
 
 export type T_User = {
@@ -54,5 +54,5 @@ export type T_RegisterCredentials = {
 export type T_RocketsListResponse = {
     samples: T_Rocket[],
     draft_mission_id: number,
-    samples_count: number
+    rockets_count: number
 }

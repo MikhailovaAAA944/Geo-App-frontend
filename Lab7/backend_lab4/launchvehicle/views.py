@@ -38,7 +38,7 @@ def get_draft_calculation(request):
     if user is None:
         return None
     
-    return PayloadCalculation.objects.filter(status="DRAFT", client=user).first()
+    return PayloadCalculation.objects.filter(status="Черновик", client=user).first()
  
 
  
@@ -58,9 +58,14 @@ class LaunchVehicleList(APIView):
 
         # Применяем фильтрацию по параметрам
         launch_vehicle = self.apply_filters(launch_vehicle, query_params)
-    
+        draft_calculation = get_draft_calculation(request)
         serializer = self.serializer_class(launch_vehicle, many=True)
-        return Response(serializer.data)
+        res={
+        "rockets":serializer.data, 
+        "rockets_count": CalculationRequest.objects.filter(payload_calculation=draft_calculation).count() if draft_calculation else None,
+        "draft_calculation_id": draft_calculation.pk if draft_calculation else None,
+        }
+        return Response(res)
     
     def apply_filters(self, queryset, query_params):
         """
@@ -162,22 +167,26 @@ def add_rocket_to_calculation(request, rocket_id):
 
     rocket = LaunchVehicle.objects.get(pk=rocket_id)
 
-    draft_playload = PayloadCalculation.objects.filter(status = "Черновик").first()
+
+    draft_playload = get_draft_calculation(request)
 
     if draft_playload is None:
-        draft_playload = PayloadCalculation()
-        draft_playload.client = identity_user(request)
-        draft_playload.formation_datetime = timezone.now()
-        draft_playload.save()
+        draft_playload = PayloadCalculation.objects.create(
+            client=identity_user(request),
+            formation_datetime=timezone.now(),
+            status="Черновик"
+        )
+ 
 
     if CalculationRequest.objects.filter(payload_calculation=draft_playload, rocket=rocket).exists():
-        return Response(data={'text':'Ракета добавлена'},status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return Response(data={'text':'Ракета уже добавлена'},status=status.HTTP_405_METHOD_NOT_ALLOWED)
         
-    item = CalculationRequest()
-    item.payload_calculation = draft_playload
-    item.rocket = rocket
-    item.result = 1
-    item.save()
+    # Создаем объект со всеми необходимыми полями сразу
+    item = CalculationRequest.objects.create(
+        payload_calculation=draft_playload,
+        rocket=rocket,
+        result=1
+    ) 
 
     serializer = CalculationRequestSerializer(item)
     return Response(serializer.data)

@@ -1,35 +1,35 @@
 import {Button, Col, Container, Form, Input, Row} from "reactstrap";
-import SampleCard from "src/components/RocketCard";
+import RocketCard from "src/components/RocketCard";
 import {ChangeEvent, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "store/store.ts";
-import {fetchSamples, updateSampleName} from "src/store/slices/rocketsSlice";
+import {fetchRockets, updateRocketName} from "src/store/slices/rocketsSlice";
 import Bin from "components/Bin";
 
 export const RocketsListPage = () => {
 
     const dispatch = useAppDispatch()
 
-    const samples = useAppSelector((state) => state.samples.samples)
+    const rockets = useAppSelector((state) => state.rockets.rockets)
 
     const isAuthenticated = useAppSelector((state) => state.user?.is_authenticated)
 
-    const {draft_mission_id, rockets_count} = useAppSelector((state) => state.missions)
+    const {draft_payloadcalculation_id, rockets_count} = useAppSelector((state) => state.payloadcalculations)
 
-    const hasDraft = draft_mission_id != null
+    const hasDraft = draft_payloadcalculation_id != null
 
-    const query = useAppSelector((state) => state.samples.query)
+    const query = useAppSelector((state) => state.rockets.query)
 
     const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateSampleName(e.target.value))
+        dispatch(updateRocketName(e.target.value))
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(fetchSamples())
+        dispatch(fetchRockets())
     }
 
     useEffect(() => {
-        dispatch(fetchSamples())
+        dispatch(fetchRockets())
     }, [])
 
     return (
@@ -49,14 +49,14 @@ export const RocketsListPage = () => {
                 </Col>
                 {isAuthenticated &&
                     <Col className="d-flex flex-row justify-content-end" md="6">
-                        <Bin isActive={hasDraft} draft_mission_id={draft_mission_id} rockets_count={rockets_count} />
+                        <Bin isActive={hasDraft} draft_payloadcalculation_id={draft_payloadcalculation_id} rockets_count={rockets_count} />
                     </Col>
                 }
             </Row>
             <Row className="mt-5 d-flex">
-                {samples?.map(sample => (
-                    <Col key={sample.pk} className="mb-5 d-flex justify-content-center" sm="12" md="6" lg="4">
-                        <SampleCard sample={sample} showAddBtn={isAuthenticated} showMM={false} />
+                {rockets?.map(rocket => (
+                    <Col key={rocket.pk} className="mb-5 d-flex justify-content-center" sm="12" md="6" lg="4">
+                        <RocketCard rocket={rocket} showAddBtn={isAuthenticated} showMM={false} />
                     </Col>
                 ))}
             </Row>

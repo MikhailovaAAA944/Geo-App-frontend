@@ -53,8 +53,9 @@ class CalculationRequest(models.Model):
     payload_calculation = models.ForeignKey(PayloadCalculation,null=True,on_delete=models.DO_NOTHING, verbose_name="Пользователь")
     rocket = models.ForeignKey(LaunchVehicle, on_delete=models.DO_NOTHING, verbose_name="Ракета")
     result = models.IntegerField(verbose_name="Результат вычислений")
-    
-    
+    comment = models.TextField(blank=True, null=True, verbose_name="Комментарий")
+
+
 
     class Meta:
         verbose_name = "Заявка"

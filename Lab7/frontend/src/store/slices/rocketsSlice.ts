@@ -1,40 +1,40 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {T_Rocket, T_RocketsListResponse} from "src/utils/types.ts";
 import {AsyncThunkConfig} from "@reduxjs/toolkit/dist/createAsyncThunk";
-import {saveMission} from "store/slices/missionsSlice.ts";
+import {savePayloadcalculation} from "store/slices/payloadcalculationsSlice.ts";
 import {api} from "modules/api.ts";
 import {AxiosResponse} from "axios";
 
 type T_RocketsSlice = {
-    sample_name: string
-    selectedSample: null | T_Rocket
-    samples: T_Rocket[]
+    rocket_name: string
+    selectedRocket: null | T_Rocket
+    rockets: T_Rocket[]
 }
 
 const initialState:T_RocketsSlice = {
-    sample_name: "",
-    selectedSample: null,
-    samples: []
+    rocket_name: "",
+    selectedRocket: null,
+    rockets: []
 }
 
-export const fetchSample = createAsyncThunk<T_Rocket, string, AsyncThunkConfig>(
-    "fetch_sample",
+export const fetchRocket = createAsyncThunk<T_Rocket, string, AsyncThunkConfig>(
+    "fetch_rocket",
     async function(id) {
         const response = await api.launchvehicle.launchvehicleRead(id) as unknown as AxiosResponse<T_Rocket>
         return response.data
     }
 )
 
-export const fetchSamples = createAsyncThunk<T_Rocket[], object, AsyncThunkConfig>(
-    "fetch_samples",
+export const fetchRockets = createAsyncThunk<T_Rocket[], object, AsyncThunkConfig>(
+    "fetch_rockets",
     async function(_, thunkAPI) {
         const state = thunkAPI.getState();
         const response = await api.launchvehicle.launchvehicleList({
-            title: state.samples.sample_name
+            title: state.rockets.rocket_name
         }) as unknown as AxiosResponse<T_RocketsListResponse>
 
-        thunkAPI.dispatch(saveMission({
-            draft_mission_id: response.data.draft_calculation_id,
+        thunkAPI.dispatch(savePayloadcalculation({
+            draft_payloadcalculation_id: response.data.draft_calculation_id,
             rockets_count: response.data.rockets_count
         }))
 
@@ -43,33 +43,33 @@ export const fetchSamples = createAsyncThunk<T_Rocket[], object, AsyncThunkConfi
 )
 
 export const addRocketToCalculation = createAsyncThunk<void, string, AsyncThunkConfig>(
-    "samples/add_sample_to_mission",
+    "rockets/add_rocket_to_payloadcalculation",
     async function(rocket_id) {
         await api.launchvehicle.launchvehicleAddToCalculationCreate(rocket_id)
     }
 )
 
-const samplesSlice = createSlice({
-    name: 'samples',
+const rocketsSlice = createSlice({
+    name: 'rockets',
     initialState: initialState,
     reducers: {
-        updateSampleName: (state, action) => {
-            state.sample_name = action.payload
+        updateRocketName: (state, action) => {
+            state.rocket_name = action.payload
         },
-        removeSelectedSample: (state) => {
-            state.selectedSample = null
+        removeSelectedRocket: (state) => {
+            state.selectedRocket = null
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchSamples.fulfilled, (state:T_RocketsSlice, action: PayloadAction<T_Rocket[]>) => {
-            state.samples = action.payload
+        builder.addCase(fetchRockets.fulfilled, (state:T_RocketsSlice, action: PayloadAction<T_Rocket[]>) => {
+            state.rockets = action.payload
         });
-        builder.addCase(fetchSample.fulfilled, (state:T_RocketsSlice, action: PayloadAction<T_Rocket>) => {
-            state.selectedSample = action.payload
+        builder.addCase(fetchRocket.fulfilled, (state:T_RocketsSlice, action: PayloadAction<T_Rocket>) => {
+            state.selectedRocket = action.payload
         });
     }
 })
 
-export const { updateSampleName, removeSelectedSample} = samplesSlice.actions;
+export const { updateRocketName, removeSelectedRocket} = rocketsSlice.actions;
 
-export default samplesSlice.reducer
+export default rocketsSlice.reducer

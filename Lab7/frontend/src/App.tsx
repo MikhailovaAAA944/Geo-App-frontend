@@ -1,13 +1,13 @@
 import Header from "components/Header";
-import SamplesListPage from "src/pages/RocketsListPage/index.ts";
+import RocketsListPage from "src/pages/RocketsListPage/index.ts";
 import RocketPage from "src/pages/RocketPage/index.ts";
 import {Route, Routes} from "react-router-dom";
 import {Container, Row} from "reactstrap";
 import {Breadcrumbs} from "./components/Breadcrumbs/Breadcrumbs.tsx";
 import LoginPage from "pages/LoginPage";
 import RegisterPage from "pages/RegisterPage";
-import MissionsPage from "pages/MissionsPage";
-import MissionPage from "pages/MissionPage";
+import PayloadcalculationsPage from "src/pages/PayloadcalculationsPage/index.ts";
+import PayloadcalculationPage from "src/pages/PayloadcalculationPage/index.ts";
 import ProfilePage from "pages/ProfilePage";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "store/store.ts";
@@ -43,10 +43,10 @@ function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/login/" element={<LoginPage />} />
                         <Route path="/register/" element={<RegisterPage />} />
-                        <Route path="/launchvehicle/" element={<SamplesListPage />} />
+                        <Route path="/launchvehicle/" element={<RocketsListPage />} />
                         <Route path="/launchvehicle/:id/" element={<RocketPage />} />
-                        <Route path="/payloadcalculation/" element={<MissionsPage />} />
-                        <Route path="/payloadcalculation/:id/" element={<MissionPage />} />
+                        <Route path="/payloadcalculation/" element={<PayloadcalculationsPage />} />
+                        <Route path="/payloadcalculation/:id/" element={<PayloadcalculationPage />} />
                         <Route path="/profile/" element={<ProfilePage />} />
                         <Route path="/403/" element={<AccessDeniedPage />} />
                         <Route path="/404/" element={<NotFoundPage />} />

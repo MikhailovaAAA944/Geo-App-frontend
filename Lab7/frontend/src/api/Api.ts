@@ -652,12 +652,14 @@ export class Api<
      */
     payloadcalculationUpdateStatusUserUpdate: (
       calculationId: string,
+      data: UpdateStatusPayload,
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
         path: `/payloadcalculation/${calculationId}/update_status_user/`,
         method: "PUT",
         secure: true,
+        body: data, // Добавляем тело запроса
         ...params,
       }),
   };

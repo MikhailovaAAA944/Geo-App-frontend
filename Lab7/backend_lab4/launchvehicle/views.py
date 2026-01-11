@@ -210,7 +210,7 @@ def basket_cnt_calk(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def search_payload(request):
-    status = request.GET.get("status", "Черновик")
+    status = request.GET.get("status")
     
     user = identity_user(request)
 
@@ -260,6 +260,15 @@ def update_calculation(request, calculation_id):
 
     return Response(serializer.data)
 
+# Словарь космодромов
+COSMODROMES = {
+    "Байконур": {"coordinates": 45, "port_name": "Байконур"},
+    "Восточный": {"coordinates": 51, "port_name": "Восточный"},
+    "Куру": {"coordinates": 5, "port_name": "Куру"},
+    "Цзюцюань": {"coordinates": 40, "port_name": "Цзюцюань"},
+}
+
+
 #сформировать создателем (дата формирования)
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
@@ -274,6 +283,28 @@ def update_status_user(request, calculation_id):
 
     if calculation.status != "Черновик":
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+    # Получаем данные из запроса
+    cosmodrome_name = request.data.get('cosmodrome')
+    comment = request.data.get('comment')
+
+    print(66677, request.data, request)
+    print(6666, cosmodrome_name, cosmodrome_name)
+
+    # Обработка космодрома
+    if cosmodrome_name:
+        if cosmodrome_name in COSMODROMES:
+            cosmodrome_data = COSMODROMES[cosmodrome_name]
+            calculation.port_name = cosmodrome_data["port_name"]
+            calculation.location = cosmodrome_data["coordinates"]
+        else:
+            # Если космодром не найден в словаре, сохраняем как есть
+            calculation.port_name = cosmodrome_name
+            calculation.location = None
+
+    # Обработка комментария
+    if comment is not None:
+        calculation.comment = comment
 
     calculation.status = "В расчете"
     calculation.formation_datetime = timezone.now()

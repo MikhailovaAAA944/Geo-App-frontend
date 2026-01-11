@@ -6,12 +6,12 @@ export type T_Rocket =  {
     description: string,
     imagerocket: string,
     is_active: boolean,
-    order?: number
+    comment?: number
 }
 
 export type T_Calculation = {
     pk: string | null
-    status: E_MissionStatus
+    status: E_PayloadcalculationStatus
     completion_datetime: string
     creation_datetime: string
     formation_datetime: string
@@ -22,7 +22,7 @@ export type T_Calculation = {
     success: string
 }
 
-export enum E_MissionStatus {
+export enum E_PayloadcalculationStatus {
     Draft='Черновик',
     InWork='В расчете',
     Completed='Расчет завершен',
@@ -52,7 +52,7 @@ export type T_RegisterCredentials = {
 }
 
 export type T_RocketsListResponse = {
-    samples: T_Rocket[],
-    draft_mission_id: number,
+    rockets: T_Rocket[],
+    draft_payloadcalculation_id: number,
     rockets_count: number
 }

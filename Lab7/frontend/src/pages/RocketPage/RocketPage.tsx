@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {useAppDispatch, useAppSelector} from "store/store.ts";
-import {fetchSample, removeSelectedSample} from "src/store/slices/rocketsSlice";
+import {fetchRocket, removeSelectedRocket} from "src/store/slices/rocketsSlice";
 
 
 export const RocketPage = () => {
@@ -10,11 +10,11 @@ export const RocketPage = () => {
 
     const dispatch = useAppDispatch()
 
-    const selectedRocket = useAppSelector((state) => state.samples.selectedSample)
+    const selectedRocket = useAppSelector((state) => state.rockets.selectedRocket)
 
     useEffect(() => {
-        dispatch(fetchSample(id))
-        return () => dispatch(removeSelectedSample())
+        dispatch(fetchRocket(id))
+        return () => dispatch(removeSelectedRocket())
     }, []);
 
     if (!selectedRocket) {

@@ -7,9 +7,9 @@ export const Breadcrumbs = () => {
 
     const location = useLocation()
 
-    const selectedSample = useAppSelector((state) => state.samples.selectedSample)
+    const selectedRocket = useAppSelector((state) => state.rockets.selectedRocket)
 
-    const mission = useAppSelector((state) => state.missions.mission)
+    const payloadcalculation = useAppSelector((state) => state.payloadcalculations.payloadcalculation)
 
     const crumbs = () => {
 
@@ -39,7 +39,7 @@ export const Breadcrumbs = () => {
             )
         }
 
-        if (selectedSample) {
+        if (selectedRocket) {
             return (
                 <>
                     <BreadcrumbItem>
@@ -49,24 +49,24 @@ export const Breadcrumbs = () => {
                     </BreadcrumbItem>
                     <BreadcrumbItem active>
                         <Link to={location.pathname}>
-                            {selectedSample?.name}
+                            {selectedRocket?.name}
                         </Link>
                     </BreadcrumbItem>
                 </>
             )
         }
 
-        if (mission) {
+        if (payloadcalculation) {
             return (
                 <>
                     <BreadcrumbItem active>
-                        <Link to="/missions/">
+                        <Link to="/payloadcalculations/">
                             Расчеты
                         </Link>
                     </BreadcrumbItem>
                     <BreadcrumbItem active>
                         <Link to={location.pathname}>
-                            Расчет №{mission?.id}
+                            Расчет №{payloadcalculation?.id}
                         </Link>
                     </BreadcrumbItem>
                     <BreadcrumbItem></BreadcrumbItem>
@@ -74,7 +74,7 @@ export const Breadcrumbs = () => {
             )
         }
 
-        if (location.pathname == '/missions/') {
+        if (location.pathname == '/payloadcalculations/') {
             return (
                 <>
                     <BreadcrumbItem active>

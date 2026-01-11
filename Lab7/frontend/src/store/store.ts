@@ -1,8 +1,8 @@
 import {configureStore, ThunkDispatch} from "@reduxjs/toolkit";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import userReducer from "./slices/userSlice.ts"
-import missionsReducer from "./slices/missionsSlice.ts"
-import samplesReducer from "./slices/rocketsSlice.ts"
+import payloadcalculationsReducer from "./slices/payloadcalculationsSlice.ts"
+import rocketsReducer from "./slices/rocketsSlice.ts"
 import {persistStore, persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
@@ -16,8 +16,8 @@ const persistConfig = {
 export const store = configureStore({
     reducer: {
         user: persistReducer(persistConfig, userReducer),
-        missions: missionsReducer,
-        samples: samplesReducer
+        payloadcalculations: payloadcalculationsReducer,
+        rockets: rocketsReducer
     }
 });
 

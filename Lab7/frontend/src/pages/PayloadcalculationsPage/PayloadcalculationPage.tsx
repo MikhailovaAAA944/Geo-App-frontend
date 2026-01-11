@@ -1,20 +1,20 @@
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "store/store.ts";
-import {fetchMissions, T_missionsFilters, updateFilters} from "store/slices/missionsSlice.ts";
+import {fetchPayloadcalculations, T_payloadcalculationsFilters, updateFilters} from "store/slices/payloadcalculationsSlice.ts";
 import {Button, Col, Container, Form, Input, Row} from "reactstrap";
 import {CalculationsTable} from "components/CalculationsTable/CalculationsTable.tsx";
 import {useNavigate} from "react-router-dom";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.tsx";
 
-export const MissionsPage = () => {
+export const PayloadcalculationsPage = () => {
 
     const dispatch = useAppDispatch()
 
-    const missions = useAppSelector((state) => state.missions.missions)
+    const payloadcalculations = useAppSelector((state) => state.payloadcalculations.payloadcalculations)
 
     const isAuthenticated = useAppSelector((state) => state.user?.is_authenticated)
 
-    const filters = useAppSelector<T_missionsFilters>((state) => state.missions.filters)
+    const filters = useAppSelector<T_payloadcalculationsFilters>((state) => state.payloadcalculations.filters)
 
     const navigate = useNavigate()
 
@@ -38,20 +38,20 @@ export const MissionsPage = () => {
     }, [isAuthenticated]);
 
     useEffect(() => {
-        dispatch(fetchMissions())
+        dispatch(fetchPayloadcalculations())
     }, []);
 
     const applyFilters = async (e) => {
         e.preventDefault()
 
-        const filters:T_missionsFilters = {
+        const filters:T_payloadcalculationsFilters = {
             status: status,
             date_formation_start: dateFormationStart,
             date_formation_end: dateFormationEnd
         }
 
         await dispatch(updateFilters(filters))
-        await dispatch(fetchMissions())
+        await dispatch(fetchPayloadcalculations())
     }
 
     return (
@@ -74,7 +74,7 @@ export const MissionsPage = () => {
                     </Col>
                 </Row>
             </Form>
-            {missions.length ? <CalculationsTable calculations={missions}/> : <h3 className="text-center mt-5">Миссии не найдены</h3>}
+            {payloadcalculations.length ? <CalculationsTable calculations={payloadcalculations}/> : <h3 className="text-center mt-5">Миссии не найдены</h3>}
         </Container>
     )
 };
